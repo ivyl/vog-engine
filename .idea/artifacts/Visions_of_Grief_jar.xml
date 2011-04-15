@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="Visions of Grief:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Visions_of_Grief_jar</output-path>
+    <root id="root">
+      <element id="archive" name="Visions_of_Grief.jar">
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/src/META-INF/MANIFEST.MF" />
+        </element>
+        <element id="module-output" name="Visions of Grief" />
+      </element>
+      <element id="library" level="application" name="scala-library-2.8.0" />
+      <element id="library" level="project" name="Vorbis" />
+      <element id="library" level="project" name="Configgy" />
+    </root>
+  </artifact>
+</component>
