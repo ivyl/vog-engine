@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path: scala-library.jar scala-swing.jar scala-dbc.jar tritonus_s
+ hare-0.3.6.jar tritonus_jorbis-0.3.6.jar joribs.jar configgy-2.0.0.ja
+ r
+Main-Class: vog.Main
+

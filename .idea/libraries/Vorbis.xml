@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Vorbis">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../tritonus_share-0.3.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../tritonus_jorbis-0.3.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../jorbis-0.0.17/joribs.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
