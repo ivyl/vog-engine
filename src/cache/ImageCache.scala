@@ -36,6 +36,7 @@ class ImageCache extends ResourceCache[BufferedImage] {
    *  @param   degree rotation in degrees
    *  @return
    */
+  @throws(classOf[NoSuchElementException])
   def retrieveRotated(name: String, degree: Int): BufferedImage = {
     val fullName = name + "_" + degree
 
@@ -61,11 +62,10 @@ class ImageCache extends ResourceCache[BufferedImage] {
   }
 
   protected def loadResource(file: File) = {
-
-    var img = new BufferedImage(1,1,1)
+    var img: Option[BufferedImage] = None
 
     try {
-      img = ImageIO.read(file)
+      img = Some(ImageIO.read(file))
     } catch {
       case e : IOException => Logger.get.warning(e, "Sound cache couldn't find/load " + file.getAbsolutePath)
     }

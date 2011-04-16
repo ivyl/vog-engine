@@ -1,33 +1,10 @@
 package cache
 
-import sound.SoundSample
 import java.io._
-import javax.sound.sampled.{AudioSystem, AudioFormat}
 import net.lag.logging.Logger
 import config.Configuration
-
-object SoundCache {
-  /** Sample file in stored PCM
-   *  audio.sampleSize in configuration file
-   *  @default 16
-   */
-  val sampleSize = Configuration.config.getInt("audio.sampleSize", 16)
-
-  /** Converts given audio format to PCM, for storing purposes.
-   *  @param sourceFormat source format, some properties will be held
-   *  @return             resulting PCM format
-   */
-  def convertFormat(sourceFormat : AudioFormat)  = {
-    new AudioFormat(
-        AudioFormat.Encoding.PCM_SIGNED,
-        sourceFormat.getSampleRate(),
-        sampleSize,
-        sourceFormat.getChannels(),
-        sourceFormat.getChannels() * (sampleSize / 8),
-        sourceFormat.getSampleRate(),
-        false)
-  }
-}
+import sound.{FormatConverter, SoundSample}
+import javax.sound.sampled.AudioSystem
 
 /** Sound caching class.
  *  Loads files under audio/ *.ogg (default).
@@ -58,11 +35,12 @@ class SoundCache extends ResourceCache[SoundSample] {
   val chunkSize = Configuration.config.getInt("audio.chunkSize", 3000)
 
   protected def loadResource(file: File) = {
-    var soundSample = new SoundSample(null, null, 0, 0)
+    var soundSample: Option[SoundSample] = None
+    var inputStream = AudioSystem.getAudioInputStream(file)
+
     try {
-      var inputStream = AudioSystem.getAudioInputStream(file)
       val oldFormat = AudioSystem.getAudioFileFormat(inputStream)
-      val format = SoundCache.convertFormat(oldFormat.getFormat)
+      val format = FormatConverter.convertFormat(oldFormat.getFormat)
       inputStream = AudioSystem.getAudioInputStream(format, inputStream)
 
       var read = 0
@@ -81,12 +59,12 @@ class SoundCache extends ResourceCache[SoundSample] {
         read = inputStream.read(singleChunk)
       }
 
-      inputStream.close
-
-      soundSample = new SoundSample(chunks, format, chunkSize, lastChunkSize)
+      soundSample = Some(new SoundSample(chunks, format, chunkSize, lastChunkSize))
 
     } catch {
-      case e : IOException => Logger.get.warning(e, "Sound cache couldn't find/load " + file.getAbsolutePath)
+      case e: IOException => Logger.get.warning(e, "Sound cache couldn't find/load " + file.getAbsolutePath)
+    } finally {
+      inputStream.close
     }
 
     soundSample

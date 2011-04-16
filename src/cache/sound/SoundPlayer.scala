@@ -28,7 +28,7 @@ object SoundPlayer extends Actor {
    *  No need to execute start with this.
    *  @param poolSize number of playing actors to initialize with.
    */
-  def apply(poolSize : Int) {
+  def apply(poolSize: Int) {
     this.poolSize = poolSize
     start
   }
@@ -37,9 +37,10 @@ object SoundPlayer extends Actor {
     start
   }
 
-  def playOgg(file : File) {
-    /* TODO: Implement
-    */
+  def playOgg(file: File) {
+    Actor.actor {
+
+    }
   }
 
   protected def initialize {
@@ -59,11 +60,11 @@ object SoundPlayer extends Actor {
   }
 
   /** Dequeuing first free AudioActor and ordering him to play. */
-  private def playOnFirstAvailable(sample : SoundSample) {
+  private def playOnFirstAvailable(sample: SoundSample) {
     try {
-      actorsQueue.dequeue !  sample
+      actorsQueue.dequeue ! sample
     } catch {
-      case e : NoSuchElementException => Logger.get.info(e, "Out of AudioActors")
+      case e: NoSuchElementException => Logger.get.info(e, "Out of AudioActors")
     }
   }
 

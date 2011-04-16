@@ -31,10 +31,10 @@ class AudioActor extends Actor {
     }
   }
 
-  private def play(sample : SoundSample) {
+  private def play(sample: SoundSample) {
     try {
       val dataLine = AudioSystem.getSourceDataLine(sample.format)
-      var chunk : Array[Byte] = new Array[Byte](0)
+      var chunk: Array[Byte] = new Array[Byte](0)
       dataLine.open(sample.format, AudioActor.bufferSize)
       dataLine.start
 
@@ -52,8 +52,8 @@ class AudioActor extends Actor {
       dataLine.drain
       dataLine.close
     } catch {
-      case e : LineUnavailableException => Logger.get.warning(e, "Couldn't play some sound")
-      case e : SecurityException        => Logger.get.warning(e, "Couldn't close dataLine")
+      case e: LineUnavailableException => Logger.get.warning(e, "Couldn't play some sound")
+      case e: SecurityException        => Logger.get.warning(e, "Couldn't close dataLine")
     }
   }
 
