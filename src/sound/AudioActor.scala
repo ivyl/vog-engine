@@ -1,4 +1,4 @@
-package cache.sound
+package sound
 
 import actors.Actor
 import javax.sound.sampled._
@@ -6,14 +6,16 @@ import net.lag.logging.Logger
 import config.Configuration
 
 object AudioActor {
-  /** represents buffers size
+  /**
+   *  Represents buffers size.
    *  audio.bufferSize in configuration file
    *  @default 3200
    */
   val bufferSize = Configuration.config.getInt("audio.bufferSize", 3200)
 }
 
-/** Class for playing music concurrently.
+/**
+ *  Plays music concurrently.
  *  Basing on actors.
  *  Expects to receive SoundSample.
  *  @author Ivyl

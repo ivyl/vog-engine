@@ -1,14 +1,14 @@
-package cache.sound
+package sound
 
 import actors.Actor
 import collection.mutable.Queue
 import net.lag.logging.Logger
 import config.Configuration
 import annotation.target.getter
-import java.io.{IOException, File}
-import javax.sound.sampled.{LineUnavailableException, AudioSystem}
+import java.io.InputStream
 
-/** Simple low-latency sound playing class.
+/**
+ *  Simple low-latency sound playing class.
  *  Needs to be started (apply does this).
  *
  *  Playing by sending SoundSample instance, no response.
@@ -18,14 +18,16 @@ import javax.sound.sampled.{LineUnavailableException, AudioSystem}
  */
 object SoundPlayer extends Actor {
 
-  /** Number of workers created when staring new Player
+  /**
+   *  Number of workers created when staring new Player
    *  audio.poolSize in configuration file
    */
   @getter
   var poolSize = Configuration.config.getInt("audio.poolSize", 8)
   private var actorsQueue = new Queue[Actor]()
 
-  /** Starting player with given number of playing actors.
+  /**
+   *  Starting player with given number of playing actors.
    *  No need to execute start with this.
    *  @param poolSize number of playing actors to initialize with.
    */
@@ -34,17 +36,17 @@ object SoundPlayer extends Actor {
     start
   }
 
-  /** Start actor with default pool size.
-   */
+  /** Start actor with default pool size. */
   def apply {
     start
   }
 
-  /** Play in background from file. Starts playback.
+  /**
+   *  Play in background from file. Starts playback.
    *  See FileAudioActor documentation.
-   *  @returns FileAudioActor
+   *  @return FileAudioActor
    */
-  def playFile(file: File) = {
+  def playFile(file: InputStream) = {
     val actor = new FileAudioActor(file)
     actor.start
     actor

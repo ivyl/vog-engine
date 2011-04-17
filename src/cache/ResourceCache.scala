@@ -1,42 +1,47 @@
 package cache
 
-import java.io.File
 import scala.collection.mutable._
 import config.Configuration
-import java.util.NoSuchElementException
-
+import java.io.{FileInputStream, InputStream, File}
 
 object ResourceCache {
   var dataDir = Configuration.dataDirectory
-
 }
 
-/** Abstract trait, which represents general resource cache
+/**
+ *  General resource cache, providing partial implementation.
+ *  Caching in [[scala.collection.mutable.HashMap].
  *  @tparm T      Stored element type.
  *  @author Ivyl
  */
-trait ResourceCache[T] {
+trait ResourceCache[T] extends Cache[T] {
   protected var resources: Map[String, T] = new HashMap;
 
   protected val postfix: String
   protected val dir: String
 
-  /** Wipes collection, freeing resources.
-   *  Should be used wisely.
+  /**
+   * Frees resources by removing reference to [[scala.collection.mutable.HashMap].
+   * New HashMap is created.
    */
-  def wipe {
+  def free {
     resources = new HashMap;
   }
 
-  /** To override. Should handle loading and caching.
+  /**
+   *  Handles loading resources.
+   *  To implement.
+   *  Invoked when not found in cache.
    *  @param file file to be loaded into cache.
    */
   protected def loadResource(file: File): Option[T];
 
-  /** Retrieve resources.
-   *  If not cache it is cached first.
-   *  @param   file     File instance that represents resource to be loaded
-   *  @returns resource
+  /**
+   *  Returns resource.
+   *  Retrieves from HashMap.
+   *  If not cached it loaded via loadResource first and then stored.
+   *  @param  name     name of resource to be loaded
+   *  @return resource
    */
   @throws(classOf[NoSuchElementException])
   def retrieve(name: String): T = {
@@ -51,7 +56,25 @@ trait ResourceCache[T] {
     }
   }
 
-  def resourceFile(name: String) = {
+  /**
+   *  Returns InputStream to non-cached file in file system.
+   *  FileInputStream in this case.
+   *  @param name name of resource to be loaded
+   *  @return input stream representing resource
+   */
+  def resourceInputStream(name: String): InputStream = {
+    new FileInputStream(resourceFile(name))
+  }
+
+  /**
+   *  Returns file representing resource.
+   *  Instead of loading/retrieving resource.
+   *  @param  name resource name
+   *  @return file representing resource
+   */
+  protected def resourceFile(name: String) = {
     new File(ResourceCache.dataDir+dir+name+postfix)
   }
+
+
 }

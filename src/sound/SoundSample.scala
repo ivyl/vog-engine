@@ -1,8 +1,9 @@
-package cache.sound
+package sound
 
 import javax.sound.sampled.AudioFormat
 
-/** Simple audio sample holding class
+/**
+ *  Simple audio sample holding class
  *  @param  chunks        sample stored as list of byte arrays
  *  @param  format        audio format representation, for playback purposes
  *  @param  chunkSize     single chunk size

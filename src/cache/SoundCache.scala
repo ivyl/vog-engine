@@ -3,10 +3,11 @@ package cache
 import java.io._
 import net.lag.logging.Logger
 import config.Configuration
-import sound.{FormatConverter, SoundSample}
 import javax.sound.sampled.AudioSystem
+import sound.{FormatConverter, SoundSample}
 
-/** Sound caching class.
+/**
+ *  Sound caching class.
  *  Loads files under audio/ *.ogg (default).
  *  *.ogg may contain subdirectories.
  *  Caches everything you have SPI libraries for.
@@ -14,21 +15,24 @@ import javax.sound.sampled.AudioSystem
  */
 class SoundCache extends ResourceCache[SoundSample] {
 
-  /** Directory used to construct path for audio file.
+  /**
+   *  Directory used to construct path for audio file.
    *  Formula = dir + name + postfix
    *  audio.dir in configuration file
    *  @default audio/
    */
   val dir = Configuration.config.getString("audio.dir", "audio/")
 
-  /** Postfix used to construct path for audio file.
+  /**
+   *  Postfix used to construct path for audio file.
    *  Formula = dir + name + postfix
    *  audio.postfix in configuration file
    * @default .ogg
    */
   val postfix = Configuration.config.getString("audio.postfix", ".ogg")
 
-  /** File is stored in chunks, this represent single chunk size in bytes.
+  /**
+   *  Data is stored in chunks, this represent single chunk size in bytes.
    *  audio.chunkSize in configuration file
    *  @default 3000
    */
