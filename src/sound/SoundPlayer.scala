@@ -1,79 +1,42 @@
 package sound
 
-import actors.Actor
-import collection.mutable.Queue
-import net.lag.logging.Logger
 import config.Configuration
-import annotation.target.getter
-import java.io.InputStream
+import net.lag.logging.Logger
+import javax.sound.sampled._
 
 /**
- *  Simple low-latency sound playing class.
- *  Needs to be started (apply does this).
- *
- *  Playing by sending SoundSample instance, no response.
- *
- *  Should be started only once, otherwise actors accumulate.
- *  @author Ivyl
+ * @author Ivyl
  */
-object SoundPlayer extends Actor {
+object SoundPlayer {
+  /**
+   *  Represents buffers size.
+   *  audio.bufferSize in configuration file
+   *  @default 3200
+   */
+  val bufferSize = Configuration.config.getInt("audio.bufferSize", 3200)
 
   /**
-   *  Number of workers created when staring new Player
-   *  audio.poolSize in configuration file
+   * Initializes sound output, and after playing handles closing.
+   * It does format conversion.
+   * @param format input audio format
+   * @param player function that gets data line and audio format it expects
    */
-  @getter
-  var poolSize = Configuration.config.getInt("audio.poolSize", 8)
-  private var actorsQueue = new Queue[Actor]()
+  def play(format: AudioFormat)(player: (SourceDataLine, AudioFormat) => Unit) {
+    val newFormat = FormatConverter.convertFormat(format)
+    val dataLine = AudioSystem.getSourceDataLine(newFormat)
 
-  /**
-   *  Starting player with given number of playing actors.
-   *  No need to execute start with this.
-   *  @param poolSize number of playing actors to initialize with.
-   */
-  def apply(poolSize: Int) {
-    this.poolSize = poolSize
-    start
-  }
-
-  /** Start actor with default pool size. */
-  def apply {
-    start
-  }
-
-  /**
-   *  Play in background from file. Starts playback.
-   *  See FileAudioActor documentation.
-   *  @return FileAudioActor
-   */
-  def playFile(file: InputStream) = {
-    val actor = new FileAudioActor(file)
-    actor.start
-    actor
-  }
-
-  protected def initialize {
-    for (i <- 0 until poolSize) {
-      actorsQueue enqueue (new AudioActor).start
-    }
-  }
-
-  def act() {
-    initialize
-    loop{
-      receive {
-        case sample: SoundSample => playOnFirstAvailable(sample)
-        case actor:  Actor       => actorsQueue enqueue actor //recived actor, requeuing
-      }
-    }
-  }
-
-  /** Dequeuing first free AudioActor and ordering him to play. */
-  private def playOnFirstAvailable(sample: SoundSample) {
     try {
-      actorsQueue.dequeue ! sample
+      dataLine.open(newFormat, SoundPlayer.bufferSize)
+      dataLine.start
+
+      player(dataLine, newFormat)
+
+      dataLine.drain
     } catch {
-      case e: NoSuchElementException => Logger.get.info(e, "Out of AudioActors")
+      case e: LineUnavailableException => Logger.get.warning(e, "Couldn't play some sound")
+      case e: SecurityException => Logger.get.warning(e, "Couldn't close dataLine")
+    } finally {
+      dataLine.close
     }
   }
 

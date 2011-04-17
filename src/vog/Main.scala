@@ -1,6 +1,6 @@
 package vog
 
-import sound.SoundPlayer
+import sound.SoundManager
 
 
 /**
@@ -10,9 +10,9 @@ object Main {
 
   def main(argv: Array[String]) {
     val soundCache = new cache.SoundCache
-    SoundPlayer(8)
-    val soundSample = soundCache.resourceInputStream("bla")
-    SoundPlayer.playFile(soundSample)
+    SoundManager(8)
+    val soundSample = soundCache.retrieve("bla")
+    SoundManager ! soundSample
   }
 
 }

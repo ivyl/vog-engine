@@ -1,18 +1,6 @@
 package sound
 
 import actors.Actor
-import javax.sound.sampled._
-import net.lag.logging.Logger
-import config.Configuration
-
-object AudioActor {
-  /**
-   *  Represents buffers size.
-   *  audio.bufferSize in configuration file
-   *  @default 3200
-   */
-  val bufferSize = Configuration.config.getInt("audio.bufferSize", 3200)
-}
 
 /**
  *  Plays music concurrently.
@@ -35,29 +23,21 @@ class AudioActor extends Actor {
   }
 
   private def play(sample: SoundSample) {
-    try {
-      val dataLine = AudioSystem.getSourceDataLine(sample.format)
-      var chunk: Array[Byte] = new Array[Byte](0)
-      dataLine.open(sample.format, AudioActor.bufferSize)
-      dataLine.start
+    var chunk: Array[Byte] = new Array[Byte](0)
+    val iterator = sample.chunks.iterator
 
-      val iterator = sample.chunks.iterator
+    SoundPlayer.play(sample.format) { (dataLine, format) =>
 
       while (iterator.hasNext) {
         chunk = iterator.next
         if (iterator.hasNext) {
-          dataLine.write(chunk, 0, chunk.length)
-        } else {
-          dataLine.write(chunk, 0, sample.lastChunkSize)
-        }
+         dataLine.write(chunk, 0, chunk.length)
+       } else {
+         dataLine.write(chunk, 0, sample.lastChunkSize)
+       }
       }
-
-      dataLine.drain
-      dataLine.close
-    } catch {
-      case e: LineUnavailableException => Logger.get.warning(e, "Couldn't play some sound")
-      case e: SecurityException        => Logger.get.warning(e, "Couldn't close dataLine")
     }
+
   }
 
 }
