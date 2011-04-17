@@ -8,6 +8,7 @@ import config.Configuration
 object AudioActor {
   /** represents buffers size
    *  audio.bufferSize in configuration file
+   *  @default 3200
    */
   val bufferSize = Configuration.config.getInt("audio.bufferSize", 3200)
 }

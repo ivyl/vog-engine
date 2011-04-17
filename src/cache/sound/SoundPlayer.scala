@@ -2,10 +2,11 @@ package cache.sound
 
 import actors.Actor
 import collection.mutable.Queue
-import java.io.File
 import net.lag.logging.Logger
 import config.Configuration
 import annotation.target.getter
+import java.io.{IOException, File}
+import javax.sound.sampled.{LineUnavailableException, AudioSystem}
 
 /** Simple low-latency sound playing class.
  *  Needs to be started (apply does this).
@@ -33,14 +34,20 @@ object SoundPlayer extends Actor {
     start
   }
 
+  /** Start actor with default pool size.
+   */
   def apply {
     start
   }
 
-  def playOgg(file: File) {
-    Actor.actor {
-
-    }
+  /** Play in background from file. Starts playback.
+   *  See FileAudioActor documentation.
+   *  @returns FileAudioActor
+   */
+  def playFile(file: File) = {
+    val actor = new FileAudioActor(file)
+    actor.start
+    actor
   }
 
   protected def initialize {

@@ -43,11 +43,15 @@ trait ResourceCache[T] {
     if (resources contains name) {
       resources.get(name).get
     } else {
-      val file = new File(ResourceCache.dataDir+dir+name+postfix)
+      val file = resourceFile(name)
       val resource = loadResource(file).get
 
       resources.put(name, resource)
       resource
     }
+  }
+
+  def resourceFile(name: String) = {
+    new File(ResourceCache.dataDir+dir+name+postfix)
   }
 }
