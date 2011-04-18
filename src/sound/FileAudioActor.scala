@@ -3,12 +3,11 @@ package sound
 import actors.Actor
 import javax.sound.sampled._
 import net.lag.logging.Logger
-import config.Configuration
 import java.io.{InputStream, IOException}
 
 /**
  *  Plays music concurrently from files.
- *  Basing on actors.
+ *  Actor.
  *  Stops playing when it receives 'exit .
  *  @author Ivyl
  */
