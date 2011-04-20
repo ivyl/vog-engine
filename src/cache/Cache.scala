@@ -3,6 +3,7 @@ package cache
 import java.io.File
 
 /**
+ * General fully abstract trait representing cache.
  * @author Ivyl
  */
 trait Cache[T] {

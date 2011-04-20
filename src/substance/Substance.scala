@@ -1,9 +1,7 @@
 package substance
 
-import scala.swing.{Graphics2D,Image}
+import scala.swing.Graphics2D
 import java.awt.image.ImageObserver
-import annotation.target.getter
-
 /**
  * Base substance class,
  * @author Ivyl
@@ -14,16 +12,11 @@ trait Substance extends BaseSubstance {
   var y = 0.0
   var angle = 0.0
 
-
-  abstract override def paint(g: Graphics2D, observer: ImageObserver) {
-    super.paint(g, observer)
-    synchronized {
+  protected def paint(g: Graphics2D, observer: ImageObserver) {
       if (image.isDefined) {
         g.drawImage(image.get, x.toInt, y.toInt, observer)
       }
-    }
   }
 
-  def behavior
 
 }

@@ -8,9 +8,10 @@ import swing.Image
 
 
 /**
+ * Mutator which uses image cache to receive image basing on name.
  * @author Ivyl
  */
-trait CacheMutator extends BaseSubstance {
+trait CacheMutator extends Mutator {
   var name = "default"
 
   private var oldName = name
@@ -18,12 +19,12 @@ trait CacheMutator extends BaseSubstance {
 
   var image: Option[Image] = CacheManager.image.retrieveRotated(name, angle.toInt)
 
-  abstract override def paint(g: Graphics2D, observer: ImageObserver) {
-    super.paint(g, observer)
+  protected abstract override def paint(g: Graphics2D, observer: ImageObserver) {
     if (oldName != name || oldAngle != angle) {
       oldAngle = angle
       oldName = name
       image = CacheManager.image.retrieveRotated(name, angle.toInt)
     }
+    super.paint(g, observer)
   }
 }
