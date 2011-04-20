@@ -5,7 +5,7 @@ import collection.mutable.Queue
 import net.lag.logging.Logger
 import config.Configuration
 import annotation.target.getter
-import java.io.InputStream
+import java.io.File
 
 /**
  *  Simple low-latency sound player management class.
@@ -46,7 +46,7 @@ object SoundManager extends Actor {
    *  See FileAudioActor documentation.
    *  @return FileAudioActor
    */
-  def playFile(file: InputStream) = {
+  def playFile(file: File) = {
     val actor = new FileAudioActor(file)
     actor.start
     actor
@@ -62,8 +62,8 @@ object SoundManager extends Actor {
     initialize
     loop{
       receive {
-        case sample: SoundSample => playOnFirstAvailable(sample)
-        case actor:  Actor       => actorsQueue enqueue actor //recived actor, requeuing
+        case sample: SoundSample    => playOnFirstAvailable(sample)
+        case actor:  FileAudioActor => actorsQueue enqueue actor //received actor, requeuing
       }
     }
   }

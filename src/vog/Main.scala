@@ -11,8 +11,7 @@ object Main {
   def main(argv: Array[String]) {
     val soundCache = new cache.SoundCache
     SoundManager(8)
-    val soundSample = soundCache.retrieve("bla")
-    SoundManager ! soundSample
+    SoundManager.playFile(soundCache.resourceFile("bla"))
   }
 
 }

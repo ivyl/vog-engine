@@ -10,18 +10,26 @@ object ResourceCache {
 
 /**
  *  General resource cache, providing partial implementation.
- *  Caching in [[scala.collection.mutable.HashMap].
+ *  Caching in [[scala.collection.mutable.HashMap]].
+ *
+ *  postfix, dir needs to be specified
+ *  loadResource needs to be implemented
+ *
+ *  building file path: dataDir + dir + name + postfix
+ *
  *  @tparm T      Stored element type.
  *  @author Ivyl
  */
 trait ResourceCache[T] extends Cache[T] {
   protected var resources: Map[String, T] = new HashMap;
 
+  /** postfix used when building path */
   protected val postfix: String
+  /** dir (prefix) used when building path */
   protected val dir: String
 
   /**
-   * Frees resources by removing reference to [[scala.collection.mutable.HashMap].
+   * Frees resources by removing reference to [[scala.collection.mutable.HashMap]].
    * New HashMap is created.
    */
   def free {
@@ -44,35 +52,26 @@ trait ResourceCache[T] extends Cache[T] {
    *  @return resource
    */
   @throws(classOf[NoSuchElementException])
-  def retrieve(name: String): T = {
+  def retrieve(name: String): Option[T] = {
     if (resources contains name) {
-      resources.get(name).get
+      resources.get(name)
     } else {
       val file = resourceFile(name)
-      val resource = loadResource(file).get
-
-      resources.put(name, resource)
+      val resource = loadResource(file)
+      if (resource.isDefined) resources.put(name, resource.get)
       resource
     }
   }
 
   /**
-   *  Returns InputStream to non-cached file in file system.
-   *  FileInputStream in this case.
-   *  @param name name of resource to be loaded
-   *  @return input stream representing resource
-   */
-  def resourceInputStream(name: String): InputStream = {
-    new FileInputStream(resourceFile(name))
-  }
-
-  /**
    *  Returns file representing resource.
    *  Instead of loading/retrieving resource.
+   *  Should be used by descendant classes to access file.
+   *  dataDir + dir + name + postfix
    *  @param  name resource name
    *  @return file representing resource
    */
-  protected def resourceFile(name: String) = {
+  def resourceFile(name: String) = {
     new File(ResourceCache.dataDir+dir+name+postfix)
   }
 

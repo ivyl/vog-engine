@@ -41,27 +41,36 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
    *  @return  rotated image
    */
   @throws(classOf[NoSuchElementException])
-  def retrieveRotated(name: String, degree: Int): BufferedImage = {
-    val fullName = name + "_" + degree
+  def retrieveRotated(name: String, degree: Int): Option[BufferedImage] = {
+    //normalize
+    var deg = degree % 360;
+    if (deg < 0) deg = 360 - deg
+
+    val fullName = name + "_" + deg
 
     if (resources contains fullName) {
 
-      resources.get(fullName).get
+      resources.get(fullName)
 
     } else {
-      var image = resources.get(name).get
-      val tx = new AffineTransform
-      val radians = scala.math.toRadians(degree)
+      val imageOption = retrieve(name)
+      if (imageOption.isDefined) {
+        var image = imageOption.get
+        val tx = new AffineTransform
+        val radians = math.toRadians(deg)
 
-      tx.rotate(radians, image.getWidth/2, image.getHeight/2)
+        tx.rotate(radians, image.getWidth/2, image.getHeight/2)
 
-      val op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR)
+        val op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR)
 
-      image = op.filter(image, null)
+        image = op.filter(image, null)
 
-      resources.put(fullName, image)
+        resources.put(fullName, image)
+        Some(image)
+      } else {
+        None
+      }
 
-      image
     }
   }
 
@@ -71,7 +80,7 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
     try {
       img = Some(ImageIO.read(file))
     } catch {
-      case e : IOException => Logger.get.warning(e, "Sound cache couldn't find/load " + file.getAbsolutePath)
+      case e : IOException => Logger.get.warning(e, "Image cache couldn't find/load " + file.getAbsolutePath)
     }
 
     img

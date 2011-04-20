@@ -7,5 +7,5 @@ package cache
  * @author Ivyl
  */
 trait RotationCache[T] extends Cache[T] {
-  def retrieveRotated(name: String, degree: Int): T
+  def retrieveRotated(name: String, degree: Int): Option[T]
 }

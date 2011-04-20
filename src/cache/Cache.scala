@@ -1,6 +1,6 @@
 package cache
 
-import java.io.InputStream
+import java.io.File
 
 /**
  * @author Ivyl
@@ -14,15 +14,16 @@ trait Cache[T] {
    *  @return resource
    */
   @throws(classOf[NoSuchElementException])
-  def retrieve(name: String): T
+  def retrieve(name: String): Option[T]
 
   /**
-   *  If it is possible, provides InputStream to non-cached file.
-   *  Otherwise tries to wrap cached object in InputStream.
-   *  @param name name of resource to be loaded
-   *  @return input stream representing resource
+   *  Returns file representing resource.
+   *  Instead of loading/retrieving resource.
+   *  Should be used by descendant classes to access file.
+   *  @param  name resource name
+   *  @return file representing resource
    */
-  def resourceInputStream(name: String): InputStream
+  def resourceFile(name: String): File
 
   /**
    *  Frees resources.
