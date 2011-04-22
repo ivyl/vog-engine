@@ -1,6 +1,5 @@
 package substance.mutators
 
-import substance.BaseSubstance
 import config.CacheManager
 import java.awt.image.ImageObserver
 import swing.Graphics2D
@@ -8,22 +7,25 @@ import swing.Image
 
 
 /**
- * Mutator which uses image cache to receive image basing on name.
+ * Uses image cache to receive image basing on name.
+ * Retrieval happens
  * @author Ivyl
  */
-trait CacheMutator extends Mutator {
+trait CacheMutator extends NamedMutator {
   var name = "default"
 
-  private var oldName = name
+  var imageName = name
+
+  private var oldImageName = name
   private var oldAngle = angle
 
   var image: Option[Image] = CacheManager.image.retrieveRotated(name, angle.toInt)
 
   protected abstract override def paint(g: Graphics2D, observer: ImageObserver) {
-    if (oldName != name || oldAngle != angle) {
+    if (oldImageName != imageName || oldAngle != angle) {
       oldAngle = angle
-      oldName = name
-      image = CacheManager.image.retrieveRotated(name, angle.toInt)
+      oldImageName = name
+      image = CacheManager.image.retrieveRotated(imageName, angle.toInt)
     }
     super.paint(g, observer)
   }
