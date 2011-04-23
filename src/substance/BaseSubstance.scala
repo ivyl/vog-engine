@@ -5,12 +5,13 @@ import java.awt.image.ImageObserver
 import annotation.target.getter
 
 /**
+ * Shouldn't be used unless you know what you do. If you don't, use [[Substance]].
  * Base substance class.
  * Substances are basics of game. They are everything what is displayed.
- * Implements custom behaviour,can interact.
+ * Implements custom behaviour, can interact.
  * There are few implementations/preprepered Traits having "Substance" in name.
  * Extensible with mutators.
- *
+ * This is so abstract because it's ancestor to mutators.
  * @author Ivyl
  */
 trait BaseSubstance {
@@ -26,6 +27,8 @@ trait BaseSubstance {
   /** angle in degrees */
   @getter
   var angle: Double
+
+  var name: String
 
   /** image of this substance */
   var image: Option[Image]
@@ -65,8 +68,13 @@ trait BaseSubstance {
    */
   def behave {
     synchronized {
-      behavior
+      internalBehavior
     }
   }
 
+  /**
+   * Chaining behavior defined by programmer.
+   * Used by mutators.
+   */
+  protected def internalBehavior
 }

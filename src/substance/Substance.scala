@@ -2,8 +2,10 @@ package substance
 
 import scala.swing.Graphics2D
 import java.awt.image.ImageObserver
+
 /**
- * Base substance class,
+ * Most basic substance. Minimal set of methods and variables is implemented.
+ * Onl behavior should be overridden.
  * @author Ivyl
  */
 trait Substance extends BaseSubstance {
@@ -11,6 +13,7 @@ trait Substance extends BaseSubstance {
   var x = 0.0
   var y = 0.0
   var angle = 0.0
+  var name = "default"
 
   protected def paint(g: Graphics2D, observer: ImageObserver) {
       if (image.isDefined) {
@@ -18,5 +21,5 @@ trait Substance extends BaseSubstance {
       }
   }
 
-
+  protected def internalBehavior = behavior
 }

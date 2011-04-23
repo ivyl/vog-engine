@@ -11,10 +11,7 @@ import swing.Image
  * Retrieval happens
  * @author Ivyl
  */
-trait CacheMutator extends NamedMutator {
-  var name = "default"
-
-  var imageName = name
+trait CacheMutator extends NamedImageMutator {
 
   private var oldImageName = name
   private var oldAngle = angle
@@ -24,7 +21,7 @@ trait CacheMutator extends NamedMutator {
   protected abstract override def paint(g: Graphics2D, observer: ImageObserver) {
     if (oldImageName != imageName || oldAngle != angle) {
       oldAngle = angle
-      oldImageName = name
+      oldImageName = imageName
       image = CacheManager.image.retrieveRotated(imageName, angle.toInt)
     }
     super.paint(g, observer)

@@ -5,17 +5,12 @@ package substance.mutators
  * imageName should be used for retrieval
  * @author Ivyl
  */
-trait NamedMutator extends Mutator {
-  /**
-   * Name of Substance.
-   */
-  var name: String
-
+trait NamedImageMutator extends Mutator {
   /**
    * Name of image to retrieve.
    * Method of retreival should be implemented in other mutator.
    * This should be created somehow using {{{name}}.
    */
-  var imageName: String
+  var imageName: String = "default"
 
 }
