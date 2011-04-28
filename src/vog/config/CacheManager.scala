@@ -1,8 +1,8 @@
-package config
+package vog.config
 
 import java.awt.image.BufferedImage
-import sound.SoundSample
-import cache.{SoundCache, Cache, RotationCache, ImageCache}
+import vog.sound.SoundSample
+import vog.cache.{SoundCache, Cache, RotationCache, ImageCache}
 
 
 /**

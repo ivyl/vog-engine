@@ -1,8 +1,8 @@
-package cache
+package vog.cache
 
 import scala.collection.mutable._
-import config.Configuration
-import java.io.{FileInputStream, InputStream, File}
+import vog.config.Configuration
+import java.io.File
 
 object ResourceCache {
   var dataDir = Configuration.dataDirectory

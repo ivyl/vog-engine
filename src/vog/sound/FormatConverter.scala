@@ -1,6 +1,6 @@
-package sound
+package vog.sound
 
-import config.Configuration
+import vog.config.Configuration
 import javax.sound.sampled.AudioFormat
 
 

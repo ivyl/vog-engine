@@ -1,6 +1,6 @@
-package substance.mutators
+package vog.substance.mutators
 
-import substance.BaseSubstance
+import vog.substance.BaseSubstance
 
 
 /**

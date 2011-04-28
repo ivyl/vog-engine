@@ -1,4 +1,4 @@
-package substance.mutators
+package vog.substance.mutators
 
 /**
  * Adds name and image name.

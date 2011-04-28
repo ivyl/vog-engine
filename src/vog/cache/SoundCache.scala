@@ -1,10 +1,10 @@
-package cache
+package vog.cache
 
 import java.io._
 import net.lag.logging.Logger
-import config.Configuration
+import vog.config.Configuration
 import javax.sound.sampled.AudioSystem
-import sound.{FormatConverter, SoundSample}
+import vog.sound.{FormatConverter, SoundSample}
 
 /**
  *  Sound caching class.

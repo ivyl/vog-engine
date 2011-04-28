@@ -1,4 +1,4 @@
-package sound
+package vog.sound
 
 import actors.Actor
 

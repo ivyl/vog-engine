@@ -1,8 +1,8 @@
 package vog
 
-import sound.SoundManager
-import substance.Substance
-import substance.mutators.CacheMutator
+import vog.sound.SoundManager
+import vog.substance.Substance
+import vog.substance.mutators.CacheMutator
 
 
 /**

@@ -1,9 +1,9 @@
-package sound
+package vog.sound
 
 import actors.Actor
 import collection.mutable.Queue
 import net.lag.logging.Logger
-import config.Configuration
+import vog.config.Configuration
 import annotation.target.getter
 import java.io.File
 

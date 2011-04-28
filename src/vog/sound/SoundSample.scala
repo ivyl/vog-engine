@@ -1,4 +1,4 @@
-package sound
+package vog.sound
 
 import javax.sound.sampled.AudioFormat
 

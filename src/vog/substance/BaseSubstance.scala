@@ -1,4 +1,4 @@
-package substance
+package vog.substance
 
 import scala.swing.{Graphics2D,Image}
 import java.awt.image.ImageObserver

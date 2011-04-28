@@ -1,4 +1,4 @@
-package config
+package vog.config
 
 import net.lag.configgy.Configgy
 

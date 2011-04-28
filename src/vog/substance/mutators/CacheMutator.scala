@@ -1,6 +1,6 @@
-package substance.mutators
+package vog.substance.mutators
 
-import config.CacheManager
+import vog.config.CacheManager
 import java.awt.image.ImageObserver
 import swing.Graphics2D
 import swing.Image
