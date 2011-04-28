@@ -8,7 +8,7 @@ import annotation.target.getter
 import java.io.File
 
 /**
- *  Simple low-latency sound player management class.
+ *  Simple low-latency vog.sound player management class.
  *  Needs to be started (apply does this).
  *
  *  Playing by sending SoundSample instance, no response.

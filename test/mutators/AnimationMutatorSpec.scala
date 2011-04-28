@@ -10,7 +10,7 @@ import substance.mutators.AnimationMutator
  */
 class AnimationMutatorSpec extends Spec with ShouldMatchers {
 
-  describe("AnimationMutator cache") {
+  describe("AnimationMutator") {
     //minimal test substance
     class TestSubstance extends Substance with AnimationMutator {
       var image: Option[swing.Image] = None

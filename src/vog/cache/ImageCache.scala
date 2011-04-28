@@ -35,7 +35,7 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
   /**
    *  Returns rotated image.
    *  Normal file (not rotated) is read and transfromed, then stored.
-   *  Similar as retrieve it caches images, and if cached it is got from cache.
+   *  Similar as retrieve it caches images, and if cached it is got from vog.cache.
    *  @param   name   file location
    *  @param   degree rotation in degrees
    *  @return  rotated image
