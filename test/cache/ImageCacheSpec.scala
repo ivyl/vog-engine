@@ -2,7 +2,7 @@ package test.cache
 
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
-import cache.ImageCache
+import vog.cache.ImageCache
 import java.io.File
 import java.awt.image.BufferedImage
 

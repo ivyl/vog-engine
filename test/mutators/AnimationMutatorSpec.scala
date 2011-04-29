@@ -2,8 +2,8 @@ package test.mutators
 
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
-import substance.Substance
-import substance.mutators.AnimationMutator
+import vog.substance.Substance
+import vog.substance.mutators.AnimationMutator
 
 /**
  * @author Ivyl

@@ -3,7 +3,7 @@ package test.cache
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 import java.io.File
-import cache.ResourceCache
+import vog.cache.ResourceCache
 
 
 /**

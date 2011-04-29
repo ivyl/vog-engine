@@ -2,7 +2,7 @@ package test.substance
 
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
-import substance.Substance
+import vog.substance.Substance
 import java.awt.image.ImageObserver
 import swing.{Graphics2D, Image}
 import org.scalatest.mock.MockitoSugar
@@ -66,6 +66,10 @@ class SubstanceSpec extends Spec with ShouldMatchers with MockitoSugar {
         substance.draw(graphics, observer)
 
         verify(graphics).drawImage(image, substance.x.toInt, substance.y.toInt, observer)
+      }
+
+      describe("thread safety") {
+        pending
       }
 
     }

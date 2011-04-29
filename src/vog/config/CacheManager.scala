@@ -6,6 +6,8 @@ import vog.cache.{SoundCache, Cache, RotationCache, ImageCache}
 
 
 /**
+ * Provides image and sound cache instances.
+ * Initialized using default implementations.
  * @author Ivyl
  */
 object CacheManager {
