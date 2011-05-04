@@ -4,6 +4,7 @@ import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 import vog.substance.Substance
 import vog.substance.mutators.AnimationMutator
+import vog.cache.Image
 
 /**
  * @author Ivyl
@@ -13,7 +14,7 @@ class AnimationMutatorSpec extends Spec with ShouldMatchers {
   describe("AnimationMutator") {
     //minimal test substance
     class TestSubstance extends Substance with AnimationMutator {
-      var image: Option[swing.Image] = None
+      var image: Option[Image] = None
       protected def behavior { }
     }
 

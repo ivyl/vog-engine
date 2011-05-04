@@ -1,6 +1,7 @@
 package vog.substance
 
-import scala.swing.{Graphics2D,Image}
+import scala.swing.{Graphics2D}
+import vog.cache.Image
 import java.awt.image.ImageObserver
 import annotation.target.getter
 

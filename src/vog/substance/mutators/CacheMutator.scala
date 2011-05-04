@@ -3,7 +3,7 @@ package vog.substance.mutators
 import vog.config.CacheManager
 import java.awt.image.ImageObserver
 import swing.Graphics2D
-import swing.Image
+import vog.cache.Image
 
 
 /**

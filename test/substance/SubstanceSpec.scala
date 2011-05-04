@@ -3,10 +3,11 @@ package test.substance
 import org.scalatest.Spec
 import org.scalatest.matchers.ShouldMatchers
 import vog.substance.Substance
-import java.awt.image.ImageObserver
-import swing.{Graphics2D, Image}
+import swing.{Graphics2D}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
+import vog.cache.Image
+import java.awt.image.{BufferedImage, ImageObserver}
 
 /**
  * @author Ivyl
@@ -17,7 +18,7 @@ class SubstanceSpec extends Spec with ShouldMatchers with MockitoSugar {
 
     describe("working methods") {
       class TestSubstance extends Substance {
-        var image: Option[swing.Image] = None
+        var image: Option[Image] = None
         var run = false
         var painted = false
 
@@ -57,7 +58,7 @@ class SubstanceSpec extends Spec with ShouldMatchers with MockitoSugar {
       it("should paint on graphics when drawing and image is set") {
         val graphics = mock[Graphics2D]
         val observer = mock[ImageObserver]
-        val image = mock[Image]
+        val image = new Image(mock[BufferedImage])
 
         substance.image = Some(image)
         substance.x = 343
@@ -65,7 +66,7 @@ class SubstanceSpec extends Spec with ShouldMatchers with MockitoSugar {
 
         substance.draw(graphics, observer)
 
-        verify(graphics).drawImage(image, substance.x.toInt, substance.y.toInt, observer)
+        verify(graphics).drawImage(image.image, substance.x.toInt, substance.y.toInt, observer)
       }
 
       describe("thread safety") {

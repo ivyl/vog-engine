@@ -14,7 +14,7 @@ import vog.config.Configuration
  *  * applies for subdirectories (just pass full relative path without extension).
  *  @author Ivyl
  */
-class ImageCache extends ResourceCache[BufferedImage] with RotationCache[BufferedImage] {
+class ImageCache extends ResourceCache[Image] with RotationCache[Image] {
 
   /**
    *  Directory used to construct path for image file.
@@ -41,7 +41,7 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
    *  @return  rotated image
    */
   @throws(classOf[NoSuchElementException])
-  def retrieveRotated(name: String, degree: Int): Option[BufferedImage] = {
+  def retrieveRotated(name: String, degree: Int): Option[Image] = {
     //normalize
     var deg = degree % 360;
     if (deg < 0) deg = 360 - deg
@@ -55,7 +55,7 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
     } else {
       val imageOption = retrieve(name)
       if (imageOption.isDefined) {
-        var image = imageOption.get
+        var image = imageOption.get.image
         val tx = new AffineTransform
         val radians = math.toRadians(deg)
 
@@ -64,9 +64,9 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
         val op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR)
 
         image = op.filter(image, null)
-
-        resources.put(fullName, image)
-        Some(image)
+        val packedImage = new Image(image)
+        resources.put(fullName, packedImage)
+        Some(packedImage)
       } else {
         None
       }
@@ -75,10 +75,11 @@ class ImageCache extends ResourceCache[BufferedImage] with RotationCache[Buffere
   }
 
   protected def loadResource(file: File) = {
-    var img: Option[BufferedImage] = None
+    var img: Option[Image] = None
 
     try {
-      img = Some(ImageIO.read(file))
+      val image = new Image(ImageIO.read(file))
+      img = Some(image)
     } catch {
       case e : IOException => Logger.get.warning(e, "Image cache couldn't find/load " + file.getAbsolutePath)
     }

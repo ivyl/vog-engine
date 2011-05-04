@@ -17,7 +17,7 @@ trait Substance extends BaseSubstance {
 
   protected def paint(g: Graphics2D, observer: ImageObserver) {
       if (image.isDefined) {
-        g.drawImage(image.get, x.toInt, y.toInt, observer)
+        g.drawImage(image.get.image, x.toInt, y.toInt, observer)
       }
   }
 

@@ -1,12 +1,24 @@
 package vog.screen
 
 import swing.Graphics2D
-import java.awt.Color
 
 /**
+ * Represents single screen type.
+ * Reactions through Scala reactor (as in swing)
+ * {{{
+ *  listenTo(mouse)
+ *  listenTo(keys)
+ *  //...
+ *  listenTo(mouse.clicks)
+ *
+ *  reactions += {
+ *    case e: MouseClicked => println(e.point)
+ *  }
+ * }}}
+ * reactions
  * @author Ivyl
  */
-class Screen extends swing.Component {
+abstract class Screen extends swing.Component {
 
   /**
    * Painters that are invoked each time component is painted.
@@ -14,9 +26,13 @@ class Screen extends swing.Component {
    */
   private var painters = List[Graphics2D => Unit]()
 
+
   override def paint(g: Graphics2D) = synchronized {
     super.paint(g)
+
     painters.foreach(f => f(g))
+
+    repaint //forcing constant repainting
   }
 
   def addPainter(painter: Graphics2D => Unit) = synchronized {
@@ -27,14 +43,14 @@ class Screen extends swing.Component {
     painters = painters.filterNot(_ == painter)
   }
 
-  def tick {
+  /**
+   * Single screen "tick". Represents atomic calculations.
+   */
+  def tick
 
-  }
-
-  def nextScreen: Option[Screen] = None
-
-  def draw {
-
-  }
-
+  /**
+   * Returns next screen to be displayed.
+   * If None then this screen is used in next tick.
+   */
+  def nextScreen: Option[Screen]
 }
