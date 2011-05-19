@@ -1,10 +1,9 @@
 package vog.substance
 
-import scala.swing.{Graphics2D}
+import scala.swing.Graphics2D
 import vog.cache.Image
 import java.awt.image.ImageObserver
 import annotation.target.getter
-
 /**
  * Shouldn't be used unless you know what you do. If you don't, use [[Substance]].
  * Base substance class.
@@ -78,4 +77,5 @@ trait BaseSubstance {
    * Used by mutators.
    */
   protected def internalBehavior
+
 }

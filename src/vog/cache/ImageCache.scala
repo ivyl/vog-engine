@@ -2,7 +2,6 @@ package vog.cache
 
 import java.awt.image.AffineTransformOp
 import java.awt.geom.AffineTransform
-import java.awt.image.BufferedImage
 import javax.imageio.ImageIO
 import java.io.{IOException, File}
 import net.lag.logging.Logger
