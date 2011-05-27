@@ -46,24 +46,20 @@ object SoundManager extends Actor {
    *  See FileAudioActor documentation.
    *  @return FileAudioActor
    */
-  def playFile(file: File) = {
-    val actor = new FileAudioActor(file)
-    actor.start
-    actor
-  }
+  def playFile(file: File) = (new FileAudioActor(file)).start
 
-  protected def initialize {
+  protected def initialize() {
     for (i <- 0 until poolSize) {
       actorsQueue enqueue (new AudioActor).start
     }
   }
 
   def act() {
-    initialize
+    initialize()
     loop{
       receive {
         case sample: SoundSample    => playOnFirstAvailable(sample)
-        case actor:  FileAudioActor => actorsQueue enqueue actor //received actor, requeuing
+        case actor:  AudioActor => actorsQueue enqueue actor //received actor, requeuing
       }
     }
   }

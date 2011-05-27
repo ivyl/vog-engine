@@ -10,7 +10,7 @@ import actors.Actor
  */
 class AudioActor extends Actor {
 
-  def act() = {
+  def act() {
     //assuming that AudioActors are quite busy
     loop {
       receive {
