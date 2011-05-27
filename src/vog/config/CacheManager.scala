@@ -1,6 +1,5 @@
 package vog.config
 
-import java.awt.image.BufferedImage
 import vog.sound.SoundSample
 import vog.cache._
 

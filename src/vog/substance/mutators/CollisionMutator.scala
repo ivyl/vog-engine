@@ -4,6 +4,7 @@ import java.awt.Rectangle
 
 /**
  * Adds ability to collide and react to collision.
+ * @author Ivyl
  */
 trait CollisionMutator extends Mutator {
 

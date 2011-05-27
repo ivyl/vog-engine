@@ -21,5 +21,5 @@ trait Substance extends BaseSubstance {
       }
   }
 
-  protected def internalBehavior = behavior
+  protected def internalBehavior() { behavior() }
 }

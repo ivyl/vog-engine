@@ -8,7 +8,7 @@ object Image {
 }
 
 /**
- * Holds buffered image and it's alphachannel bitmask.
+ * Holds buffered image and it's alpha channel bitmask.
  * USING 30 BITS because jvm uses signed integers and there are some problems when bitshifting 0x80000000
  * @author Ivyl
  */
@@ -25,18 +25,19 @@ class Image(val image: BufferedImage) {
    */
   def alphaBitmask = {
     if (theBitmask.isEmpty) {
-      buildBitmask
+      buildBitmask()
     }
     theBitmask.get
   }
 
   /**
-   * Builds alpha bitmask of holded buffered image.
+   * Builds alpha bitmask of holden buffered image.
    * (x)(y)
    * Holds 30bit ints where each bit represents alpha transparency of pixel in row (x).
    * Additional pixels filled with zeros.
+   * This is lazyloaded when calling alphaBitmask. Call it only if you know you want to pre-load this.
    */
-  def buildBitmask {
+  def buildBitmask() {
     val width = (image.getWidth.toFloat/Image.bitWidth).ceil.toInt
     val height = image.getHeight
     val bitmask: Array[Array[Int]] = Array.ofDim(width, height)

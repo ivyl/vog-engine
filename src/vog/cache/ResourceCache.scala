@@ -32,7 +32,7 @@ trait ResourceCache[T] extends Cache[T] {
    * Frees resources by removing reference to [[scala.collection.mutable.HashMap]].
    * New HashMap is created.
    */
-  def free {
+  def free() {
     resources = new HashMap;
   }
 

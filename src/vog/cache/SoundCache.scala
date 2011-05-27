@@ -68,7 +68,7 @@ class SoundCache extends ResourceCache[SoundSample] {
     } catch {
       case e: IOException => Logger.get.warning(e, "Sound cache couldn't find/load " + file.getAbsolutePath)
     } finally {
-      inputStream.close
+      inputStream.close()
     }
 
     soundSample

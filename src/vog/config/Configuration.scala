@@ -4,14 +4,28 @@ import net.lag.configgy.Configgy
 
 
 /**
+ * Nice wrapper for configgy. Initializes for default configuration file.
  * @author Ivyl
  */
 object Configuration {
-  val dataDirectory = "data/"
+  var dataDirectory = "data/"
 
   Configgy.configure(dataDirectory + "config")
 
-  val config = Configgy.config
+  /**
+   * Retrieve configuration class.
+   * @returns config
+   */
+  def config = Configgy.config
+
+  /**
+   * Change used configuration file.
+   * @param filename location (can be relative) of file
+   */
+  def configFile(filename: String) {
+    Configgy.configure(filename)
+  }
+
 
 
 }
