@@ -33,6 +33,9 @@ trait BaseSubstance {
   /** image of this substance */
   var image: Option[Image]
 
+  private
+  var dead: Boolean = false
+
   /**
    * Implements drawing on screen.
    * Used internally by drawing.
@@ -60,22 +63,26 @@ trait BaseSubstance {
    * Implements behaviour of this substance. Should be "steppable".
    * Will be invoked each time framework needs to update state.
    */
-  protected def behavior
+  protected def behavior()
 
   /**
    * Makes next step in behaviour.
    * Thread-save method that should be used to make another
    */
-  def behave {
+  def behave() {
     synchronized {
-      internalBehavior
+      internalBehavior()
     }
   }
+
+  def isDead = dead
+
+  def die() { dead = true }
 
   /**
    * Chaining behavior defined by programmer.
    * Used by mutators.
    */
-  protected def internalBehavior
+  protected def internalBehavior()
 
 }

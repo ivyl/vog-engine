@@ -6,7 +6,7 @@ import java.awt.image.ImageObserver
 
 
 /**
- * Holds substances, paints it and does behaviour. Everything happens in layers.
+ * Holds substances, paints it and does behaviour. Everything happensin layers.
  * Order is held as in order.
  * @author Ivyl
  */
@@ -36,14 +36,23 @@ class BaseContainer {
    * Draws all substance layer by layer by order specified in order.
    */
   def drawAll(g: Graphics2D, observer: ImageObserver) {
-    onEachOrdered(_.draw(g,observer))
+    foreachOrdered(_.draw(g,observer))
   }
 
   /**
    * Makes all substance to behave.
    */
   def behaveAll() {
-    onEachOrdered( _.behave )
+    foreachOrdered( _.behave() )
+  }
+
+  /**
+   * Removes all substances marked as dead form all layers.
+   */
+  def removeDead() {
+    layers = layers.map { layer =>
+      (layer._1, layer._2.filterNot(_.isDead))
+    }
   }
 
   /**
@@ -51,7 +60,7 @@ class BaseContainer {
    * @param function function to invoke, gets substance as parameter.
    */
   @throws(classOf[NoLayerException])
-  def onEachOrdered(function: Substance => Unit) {
+  def foreachOrdered(function: Substance => Unit) {
     order.foreach { layerName =>
       val layer = layers.get(layerName)
       if (layer.isDefined) {

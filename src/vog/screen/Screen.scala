@@ -26,13 +26,18 @@ abstract class Screen extends swing.Component {
    */
   private var painters = List[Graphics2D => Unit]()
 
+  /** returns peer laying under this wrapper, used as observer */
+  def observer = this.peer
+
+  def width = this.size.getWidth.toInt
+  def height = this.size.getHeight.toInt
 
   override def paint(g: Graphics2D) = synchronized {
     super.paint(g)
 
     painters.foreach(f => f(g))
 
-    repaint //forcing constant repainting
+    repaint() //forcing constant repainting
   }
 
   def addPainter(painter: Graphics2D => Unit) = synchronized {
@@ -46,7 +51,7 @@ abstract class Screen extends swing.Component {
   /**
    * Single screen "tick". Represents atomic calculations.
    */
-  def tick
+  def tick()
 
   /**
    * Returns next screen to be displayed.

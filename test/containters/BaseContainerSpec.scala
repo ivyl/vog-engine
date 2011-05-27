@@ -8,6 +8,8 @@ import vog.substance.Substance
 import vog.substance.containers.{NoLayerException, BaseContainer}
 import java.awt.image.ImageObserver
 import swing.Graphics2D
+import java.util.Random
+import vog.cache.Image
 
 /**
  * @author Ivyl
@@ -23,14 +25,14 @@ class BaseContainerSpec extends Spec with ShouldMatchers with MockitoSugar {
     }
 
     it("should be not be invoked because it isn't in order") {
-      container.onEachOrdered(_.behave)
+      container.foreachOrdered(_.behave())
       verifyZeroInteractions(substance)
     }
 
     it("should be used when in layer is included in order") {
       container.order = container.order ::: List(layerName)
-      container.onEachOrdered(_.behave)
-      verify(substance).behave
+      container.foreachOrdered(_.behave())
+      verify(substance).behave()
     }
 
     var subs = List[Substance]()
@@ -49,9 +51,9 @@ class BaseContainerSpec extends Spec with ShouldMatchers with MockitoSugar {
         }
       }
 
-      container.onEachOrdered(_.behave)
+      container.foreachOrdered(_.behave())
 
-      subs.foreach(verify(_).behave)
+      subs.foreach(verify(_).behave())
     }
 
     it("should draw all") {
@@ -65,14 +67,41 @@ class BaseContainerSpec extends Spec with ShouldMatchers with MockitoSugar {
     it("should behave all") {
       container.behaveAll()
 
-      subs.foreach(verify(_, times(2)).behave) //from previous
+      subs.foreach(verify(_, times(2)).behave()) //from previous
     }
 
+      it("should remove all marked as dead") {
+      class TestSubstance extends Substance {
+        protected def behavior() {}
+        var image: Option[Image] = None
+      }
+
+      val rand = new Random
+
+      for (i <- 1 to 100) {
+        val layerName = "testu" + i
+
+        container.order = layerName :: container.order
+
+        for (j <- 1 to 100) {
+          val substance = new TestSubstance
+
+          if (rand.nextBoolean) { substance.die() }
+
+          container.addSubstance(layerName, substance)
+        }
+      }
+
+      container.removeDead()
+
+      container.foreachOrdered(_.isDead should be (false))
+
+    }
 
     it("should thorw exception when non-existing layer is ordered") {
       container.order = "foo" :: container.order
 
-      evaluating { container.onEachOrdered(_.behave) } should produce [NoLayerException]
+      evaluating { container.foreachOrdered(_.behave()) } should produce [NoLayerException]
     }
   }
 

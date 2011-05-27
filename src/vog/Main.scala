@@ -57,21 +57,28 @@ class Main(var screen: Screen) extends MainFrame {
 
     visible = true
 
+    screen.requestFocus() //needs this to respond to key events
+
     while(true) {
       currentTime = Calendar.getInstance.getTimeInMillis
+
       if (currentTime > lastTime + timeDifference) {
-        lastTime = currentTime
-        screen.tick
+        lastTime = lastTime + timeDifference
+        screen.tick()
         tempScreen = screen.nextScreen
+
         if (tempScreen.isDefined) {
           screen = tempScreen.get
           contents = screen
           //TODO: Make sure it doesn't need revalidation
           tempScreen = None
+          screen.requestFocus()
         }
+
       } else {
         Thread.sleep((lastTime + timeDifference - currentTime)/2)
       }
+
     }
   }
 

@@ -7,20 +7,30 @@ import java.awt.Rectangle
  */
 trait CollisionMutator extends Mutator {
 
-  var collisionHandlers = Map[Class[_], CollisionMutator => Unit]()
+  var collisionHandlers = List[CollisionMutator => Unit]()
 
   def collided(that: CollisionMutator) {
-    collisionHandlers(that.getClass)(that)
+    collisionHandlers.foreach { handler =>
+      try {
+      handler(that)
+      } catch {
+        case ex: MatchError => true
+      }
+    }
   }
 
   /**
    * Adds collision handler for specified class. Class type must be given separately due to type erasure in Scala.
+   * All handler are invoked (they are added to list).
+   * No exceptions are thrown, but you should handle other cased (if not handling everything) {{{ match _ => }}}
+   * because of performance costs.
+   * Usage:
+   * {{{ container.addCollisionHandler { case sub: OurSubsance => subs.die() } }}}
    * @param klazz class to handle collision with.
-   * @handler function that handles collision.
+   * @handler function that handles collision. It should do pattern matching as shown in description.
    */
-  def handleCollision[T <: CollisionMutator](klazz: Class[_])(handler: T => Unit) {
-    val function = (obj: CollisionMutator) => handler(obj.asInstanceOf[T])
-    collisionHandlers = collisionHandlers + ((klazz, function))
+  def addCollisionHandler(handler: Any => Unit) {
+    collisionHandlers = handler :: collisionHandlers
   }
 
   /**

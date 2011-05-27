@@ -31,6 +31,6 @@ trait Cache[T] {
    *  Cached files are removed from memory (may be via GarbageCollector).
    *  Prepares vog.cache for loading resources.
    */
-  def free
+  def free()
 
 }
