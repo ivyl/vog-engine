@@ -37,18 +37,18 @@ trait AnimationMutator extends NamedImageMutator {
   protected var eventCurrentFrame = 0
   protected var eventCounter = 0
 
-  protected abstract override def internalBehavior {
+  protected abstract override def internalBehavior() {
     if (animationRunning) {
       if (event.isDefined) {
-        handleEvent
+        handleEvent()
       } else {
-        animate
+        animate()
       }
     }
-    super.internalBehavior
+    super.internalBehavior()
   }
 
-  protected def handleEvent {
+  protected def handleEvent() {
     eventCounter = eventCounter + 1
 
     if (eventCounter >= eventDelay)  {
@@ -66,7 +66,7 @@ trait AnimationMutator extends NamedImageMutator {
     }
   }
 
-  protected def animate {
+  protected def animate() {
     animationCounter = animationCounter + 1
 
     if (animationCounter >= frameDelay) {
@@ -77,13 +77,13 @@ trait AnimationMutator extends NamedImageMutator {
   }
 
   /** from next behave animation will be stopped */
-  def stopAnimation = synchronized {
+  def stopAnimation() = synchronized {
     imageName = name
     animationRunning = false
   }
 
   /** from next behave animation will be running */
-  def startAnimation = synchronized {
+  def startAnimation() = synchronized {
     imageName = buildImageName
     animationRunning = true
   }

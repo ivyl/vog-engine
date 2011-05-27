@@ -29,7 +29,7 @@ class AudioActor extends Actor {
     SoundPlayer.play(sample.format) { (dataLine, format) =>
 
       while (iterator.hasNext) {
-        chunk = iterator.next
+        chunk = iterator.next()
         if (iterator.hasNext) {
          dataLine.write(chunk, 0, chunk.length)
        } else {

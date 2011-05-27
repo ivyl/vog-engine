@@ -8,7 +8,7 @@ package vog.substance.mutators
 trait NamedImageMutator extends Mutator {
   /**
    * Name of image to retrieve.
-   * Method of retreival should be implemented in other mutator.
+   * Method of retrieval should be implemented in other mutator.
    * This should be created somehow using {{{name}}.
    */
   var imageName: String = "default"

@@ -25,11 +25,11 @@ object FormatConverter {
   def convertFormat(sourceFormat: AudioFormat) = {
     new AudioFormat(
       AudioFormat.Encoding.PCM_SIGNED,
-      sourceFormat.getSampleRate(),
+      sourceFormat.getSampleRate,
       sampleSize,
-      sourceFormat.getChannels(),
-      sourceFormat.getChannels() * (sampleSize / 8),
-      sourceFormat.getSampleRate(),
+      sourceFormat.getChannels,
+      sourceFormat.getChannels * (sampleSize / 8),
+      sourceFormat.getSampleRate,
       false)
   }
 }

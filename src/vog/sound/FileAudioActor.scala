@@ -3,7 +3,7 @@ package vog.sound
 import actors.Actor
 import javax.sound.sampled._
 import net.lag.logging.Logger
-import java.io.{File, InputStream, IOException}
+import java.io.{File, IOException}
 
 /**
  *  Plays music concurrently from files.
@@ -13,7 +13,7 @@ import java.io.{File, InputStream, IOException}
  */
 class FileAudioActor(val file: File) extends Actor {
 
-  def act() = {
+  def act() {
     //assuming that AudioActors are quite busy
     var audioInputStream = AudioSystem.getAudioInputStream(file)
 
@@ -37,7 +37,7 @@ class FileAudioActor(val file: File) extends Actor {
           receiveWithin(0) {
             case 'exit => {
               continue = false
-              dataLine.flush
+              dataLine.flush()
             }
             case _ => {}
           }
@@ -48,7 +48,7 @@ class FileAudioActor(val file: File) extends Actor {
     } catch {
       case e: IOException => Logger.get.warning(e, "Sound operate on given stream" )
     } finally {
-      audioInputStream.close
+      audioInputStream.close()
     }
   }
 }

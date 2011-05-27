@@ -27,16 +27,16 @@ object SoundPlayer {
 
     try {
       dataLine.open(newFormat, SoundPlayer.bufferSize)
-      dataLine.start
+      dataLine.start()
 
       player(dataLine, newFormat)
 
-      dataLine.drain
+      dataLine.drain()
     } catch {
       case e: LineUnavailableException => Logger.get.warning(e, "Couldn't play some sound")
       case e: SecurityException => Logger.get.warning(e, "Couldn't close dataLine")
     } finally {
-      dataLine.close
+      dataLine.close()
     }
   }
 

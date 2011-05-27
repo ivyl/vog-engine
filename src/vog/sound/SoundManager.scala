@@ -33,12 +33,12 @@ object SoundManager extends Actor {
    */
   def apply(poolSize: Int) {
     this.poolSize = poolSize
-    start
+    start()
   }
 
   /** Start actor with default pool size. */
-  def apply {
-    start
+  def apply() {
+    start()
   }
 
   /**
@@ -46,7 +46,7 @@ object SoundManager extends Actor {
    *  See FileAudioActor documentation.
    *  @return FileAudioActor
    */
-  def playFile(file: File) = (new FileAudioActor(file)).start
+  def playFile(file: File) = (new FileAudioActor(file)).start()
 
   protected def initialize() {
     for (i <- 0 until poolSize) {
