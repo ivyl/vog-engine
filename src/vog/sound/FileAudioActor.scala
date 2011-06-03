@@ -13,13 +13,17 @@ import java.io.{File, IOException}
  */
 class FileAudioActor(val file: File) extends Actor {
 
+  private var end = false
+
+  def stop() { end = true }
+
   def act() {
     //assuming that AudioActors are quite busy
     var audioInputStream = AudioSystem.getAudioInputStream(file)
 
     try {
       val format = AudioSystem.getAudioFileFormat(audioInputStream).getFormat
-      val buffer = new Array[Byte](3000)
+      val buffer = new Array[Byte](SoundPlayer.bufferSize)
 
       var continue = true
       var read = 0
@@ -33,16 +37,11 @@ class FileAudioActor(val file: File) extends Actor {
           dataLine.write(buffer, 0, read)
           read = audioInputStream.read(buffer)
 
-          /* TODO: is there better way to do this? */
-          receiveWithin(0) {
-            case 'exit => {
-              continue = false
-              dataLine.flush()
-            }
-            case _ => {}
+          if (end) {
+            continue = false
+            dataLine.flush()
           }
         }
-
       }
 
     } catch {

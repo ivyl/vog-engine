@@ -13,7 +13,7 @@ object SoundPlayer {
    *  audio.bufferSize in configuration file
    *  @default 3200
    */
-  val bufferSize = Configuration.config.getInt("audio.bufferSize", 3200)
+  val bufferSize = Configuration.config.getInt("audio.bufferSize", 320000)
 
   /**
    * Initializes vog.sound output, and after playing handles closing.
