@@ -7,8 +7,8 @@ import vog.cache.Image
 
 
 /**
- * Uses image vog.cache to receive image basing on name.
- * Retrieval happens
+ * Uses image [[vog.cache]] to receive image basing on name.
+ * Retrieval happens when imageName or angle was changed.
  * @author Ivyl
  */
 trait CacheMutator extends NamedImageMutator {

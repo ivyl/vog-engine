@@ -4,7 +4,7 @@ package vog.substance.mutators
  * Makes substance animated.
  * Uses resources named name_frame.
  * You can start and stop animation. When stopped using simple name.
- * Animation is cyclic. Configure speed using {{{frameDelay}}.
+ * Animation is cyclic. Configure speed using frameDelay.
  * Should be used to animation such as walking.
  * Handling animation that does not alter substance basic look (overlays) done by creating substance with it.
  *
@@ -97,7 +97,7 @@ trait AnimationMutator extends NamedImageMutator {
    *
    * @param event name
    * @param time  number of frames, counting starts form 0
-   * @param delay number of {{{behave}}} between subsequent frames.
+   * @param delay number of behave between subsequent frames.
    */
   def eventAnimation(event: String, time: Int, delay: Int) = synchronized {
     this.event = Some(event)

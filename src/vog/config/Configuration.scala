@@ -14,7 +14,7 @@ object Configuration {
 
   /**
    * Retrieve configuration class.
-   * @returns config
+   * @return config
    */
   def config = Configgy.config
 

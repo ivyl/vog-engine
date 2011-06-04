@@ -9,7 +9,7 @@ trait NamedImageMutator extends Mutator {
   /**
    * Name of image to retrieve.
    * Method of retrieval should be implemented in other mutator.
-   * This should be created somehow using {{{name}}.
+   * This should be created somehow using {{{name}}}.
    */
   var imageName: String = "default"
 

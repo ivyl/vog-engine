@@ -8,13 +8,14 @@ import java.io.{File, IOException}
 /**
  *  Plays music concurrently from files.
  *  Actor.
- *  Stops playing when it receives 'exit .
+ *  Starts playing when started.
  *  @author Ivyl
  */
-class FileAudioActor(val file: File) extends Actor {
+class FileAudioActor(private val file: File) extends Actor {
 
   private var end = false
 
+  /** Stops playback */
   def stop() { end = true }
 
   def act() {

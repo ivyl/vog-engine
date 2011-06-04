@@ -6,6 +6,7 @@ import actors.Actor
  *  Plays music concurrently.
  *  Basing on actors.
  *  Expects to receive SoundSample.
+ *  Should not be used directly. See [[vog.sound.SoundManager]]
  *  @author Ivyl
  */
 class AudioActor extends Actor {

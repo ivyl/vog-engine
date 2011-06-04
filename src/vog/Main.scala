@@ -1,7 +1,7 @@
 package vog
 
-import config.Configuration
-import screen.Screen
+import vog.config.Configuration
+import vog.screen.Screen
 import swing.{MainFrame,Dimension}
 import java.util.Calendar
 
@@ -33,6 +33,7 @@ class Main(var screen: Screen) extends MainFrame {
 
   private val timeDifference: Long = (1000 / tps)
   private val iconFile = Configuration.config.getString("window.icon")
+  //TODO: setting icon
 
   size = new Dimension(width, height)
   preferredSize = size
@@ -70,8 +71,9 @@ class Main(var screen: Screen) extends MainFrame {
         if (tempScreen.isDefined) {
           screen = tempScreen.get
           contents = screen
-          //TODO: Make sure it doesn't need revalidation
           tempScreen = None
+
+          //Need this to grab key events
           screen.requestFocus()
         }
 

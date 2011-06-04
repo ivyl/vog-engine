@@ -8,7 +8,7 @@ import java.awt.Rectangle
  */
 trait CollisionMutator extends Mutator {
 
-  var collisionHandlers = List[CollisionMutator => Unit]()
+  protected var collisionHandlers = List[CollisionMutator => Unit]()
 
   def collided(that: CollisionMutator) {
     collisionHandlers.foreach { handler =>
@@ -28,7 +28,7 @@ trait CollisionMutator extends Mutator {
    * Usage:
    * {{{ container.addCollisionHandler { case sub: OurSubsance => subs.die() } }}}
    * @param klazz class to handle collision with.
-   * @handler function that handles collision. It should do pattern matching as shown in description.
+   * @param handler function that handles collision. It should do pattern matching as shown in description.
    */
   def addCollisionHandler(handler: Any => Unit) {
     collisionHandlers = handler :: collisionHandlers

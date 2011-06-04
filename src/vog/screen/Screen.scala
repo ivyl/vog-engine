@@ -22,7 +22,6 @@ abstract class Screen extends swing.Component {
 
   /**
    * Painters that are invoked each time component is painted.
-   * New painters are prepended so they paints sooner.
    */
   private var painters = List[Graphics2D => Unit]()
 
@@ -32,6 +31,7 @@ abstract class Screen extends swing.Component {
   def width = this.size.getWidth.toInt
   def height = this.size.getHeight.toInt
 
+  /** Used by Main to paint this component */
   override def paint(g: Graphics2D) = synchronized {
     super.paint(g)
 
@@ -40,10 +40,22 @@ abstract class Screen extends swing.Component {
     repaint() //forcing constant repainting
   }
 
+  /**
+   * Painter is functions which is invoked each time component is painted.
+   * Painted is appended. Painters of object which are "on top" should be added first.
+   *
+   * @param painter function that paints on given graphic each time screen is refreshed.
+   */
   def addPainter(painter: Graphics2D => Unit) = synchronized {
     painters = painters ::: List(painter)
   }
 
+  /**
+   * Remove painter that was added first.
+   * It should be THE SAME painter that was added.
+   *
+   * @param painter painter to be deleted.
+   */
   def removePainter(painter: Graphics2D => Unit) = synchronized {
     painters = painters.filterNot(_ == painter)
   }

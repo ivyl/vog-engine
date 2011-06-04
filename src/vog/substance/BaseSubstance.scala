@@ -28,6 +28,7 @@ trait BaseSubstance {
   @getter
   var angle: Double
 
+  /** name that represents substance */
   var name: String
 
   /** image of this substance */

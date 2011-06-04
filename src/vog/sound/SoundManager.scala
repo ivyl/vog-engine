@@ -24,7 +24,7 @@ object SoundManager extends Actor {
    */
   @getter
   var poolSize = Configuration.config.getInt("audio.poolSize", 8)
-  private var actorsQueue = new Queue[Actor]()
+  private val actorsQueue = new Queue[Actor]()
 
   /**
    *  Starting player with given number of playing actors.

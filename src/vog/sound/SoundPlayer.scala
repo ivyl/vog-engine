@@ -5,6 +5,7 @@ import net.lag.logging.Logger
 import javax.sound.sampled._
 
 /**
+ * Should not be used directly. See [[vog.sound.SoundManager]]
  * @author Ivyl
  */
 object SoundPlayer {
@@ -16,7 +17,7 @@ object SoundPlayer {
   val bufferSize = Configuration.config.getInt("audio.bufferSize", 320000)
 
   /**
-   * Initializes vog.sound output, and after playing handles closing.
+   * Initializes [[vog.sound]] output, and after playing handles closing.
    * It does format conversion.
    * @param format input audio format
    * @param player function that gets data line and audio format it expects

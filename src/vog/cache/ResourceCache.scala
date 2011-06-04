@@ -17,7 +17,7 @@ object ResourceCache {
  *
  *  building file path: dataDir + dir + name + postfix
  *
- *  @tparm T      Stored element type.
+ *  @tparam T      Stored element type.
  *  @author Ivyl
  */
 trait ResourceCache[T] extends Cache[T] {
