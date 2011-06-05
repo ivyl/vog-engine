@@ -14,7 +14,7 @@ class AudioActor extends Actor {
   def act() {
     //assuming that AudioActors are quite busy
     loop {
-      receive {
+      react {
         case sample : SoundSample =>  {
           play(sample)
           reply(this) //resend to requeue

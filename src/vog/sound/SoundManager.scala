@@ -56,20 +56,18 @@ object SoundManager extends Actor {
 
   def act() {
     initialize()
-    loop{
+    while(true){
       receive {
-        case sample: SoundSample    => playOnFirstAvailable(sample)
-        case actor:  AudioActor => actorsQueue enqueue actor //received actor, requeuing
+        case sample: SoundSample  => playOnFirstAvailable(sample)
+        case actor:  AudioActor   => actorsQueue enqueue actor
       }
     }
   }
 
   /** Dequeuing first free AudioActor and ordering him to play. */
   private def playOnFirstAvailable(sample: SoundSample) {
-    try {
+    if (!actorsQueue.isEmpty) {
       actorsQueue.dequeue ! sample
-    } catch {
-      case e: NoSuchElementException => Logger.get.info(e, "Out of AudioActors")
     }
   }
 

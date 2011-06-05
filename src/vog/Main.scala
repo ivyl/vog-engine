@@ -50,7 +50,7 @@ class Main(var screen: Screen) extends MainFrame {
   /**
    * Runs main loop starting with initial screen.
    */
-  def run {
+  def run() {
     var tempScreen: Option[Screen] = None
 
     var currentTime = Calendar.getInstance.getTimeInMillis
