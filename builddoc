@@ -1,1 +1,7 @@
-scaladoc -doc-title 'VoG Framework' -d doc -classpath 'out/artifacts/Visions_of_Grief_jar/configgy-2.0.0.jar' -sourcepath src/ `find src -iname '*.scala'`
+#!/bin/sh
+scaladoc \
+  -doc-title 'VoG Framework' \
+  -d doc \
+  -classpath 'out/artifacts/Visions_of_Grief_jar/configgy-2.0.0.jar' \
+  -sourcepath src/ \
+  `find src -iname '*.scala'`
